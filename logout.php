@@ -1,0 +1,3 @@
+<?php
+// Deconectare utilizator
+?>
