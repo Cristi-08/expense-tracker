@@ -1,3 +1,8 @@
+<?php
+// Citeste mesajele transmise prin URL dupa redirect
+$eroare = isset($_GET['eroare']) ? htmlspecialchars($_GET['eroare']) : '';
+$succes = isset($_GET['succes']) && $_GET['succes'] === '1';
+?>
 <!DOCTYPE html>
 <html lang="ro">
 <head>
@@ -40,7 +45,7 @@
             outline: none;
             border-color: #22c55e;
         }
-        .form-box .btn-submit {
+        .btn-submit {
             width: 100%;
             text-align: center;
             padding: 11px;
@@ -53,7 +58,7 @@
             cursor: pointer;
             margin-top: 8px;
         }
-        .form-box .btn-submit:hover {
+        .btn-submit:hover {
             background-color: #4ade80;
         }
         .form-link {
@@ -66,6 +71,26 @@
         .form-link a {
             color: #22c55e;
         }
+        /* Mesaj de eroare */
+        .mesaj-eroare {
+            background-color: #3b0e0e;
+            border: 1px solid #f87171;
+            color: #f87171;
+            border-radius: 6px;
+            padding: 10px 14px;
+            margin-bottom: 18px;
+            font-size: 0.9rem;
+        }
+        /* Mesaj de succes */
+        .mesaj-succes {
+            background-color: #052e16;
+            border: 1px solid #22c55e;
+            color: #22c55e;
+            border-radius: 6px;
+            padding: 10px 14px;
+            margin-bottom: 18px;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
@@ -73,31 +98,45 @@
 <div class="form-box">
     <h1>Inregistrare</h1>
 
-    <form action="php/auth.php" method="POST">
-        <!-- Camp ascuns pentru a identifica actiunea -->
-        <input type="hidden" name="actiune" value="register">
+    <?php if ($eroare): ?>
+        <!-- Afiseaza eroarea primita de la auth.php -->
+        <div class="mesaj-eroare"><?= $eroare ?></div>
+    <?php endif; ?>
 
-        <div class="form-group">
-            <label for="nume">Nume</label>
-            <input type="text" id="nume" name="nume" placeholder="Numele tau" required>
-        </div>
+    <?php if ($succes): ?>
+        <!-- Afiseaza confirmarea si un link catre login -->
+        <div class="mesaj-succes">Cont creat cu succes!</div>
+        <p class="form-link">
+            <a href="login.php">Intra in cont &rarr;</a>
+        </p>
+    <?php else: ?>
+        <!-- Formularul este ascuns dupa succes -->
+        <form action="php/auth.php" method="POST">
+            <!-- Camp ascuns pentru a identifica actiunea -->
+            <input type="hidden" name="actiune" value="register">
 
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="email@exemplu.com" required>
-        </div>
+            <div class="form-group">
+                <label for="nume">Nume</label>
+                <input type="text" id="nume" name="nume" placeholder="Numele tau" required>
+            </div>
 
-        <div class="form-group">
-            <label for="parola">Parola</label>
-            <input type="password" id="parola" name="parola" placeholder="Alege o parola" required>
-        </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="email@exemplu.com" required>
+            </div>
 
-        <button type="submit" class="btn-submit">Creeaza cont</button>
-    </form>
+            <div class="form-group">
+                <label for="parola">Parola</label>
+                <input type="password" id="parola" name="parola" placeholder="Minim 6 caractere" required>
+            </div>
 
-    <p class="form-link">
-        Am deja cont. <a href="login.php">Intra in cont</a>
-    </p>
+            <button type="submit" class="btn-submit">Creeaza cont</button>
+        </form>
+
+        <p class="form-link">
+            Am deja cont. <a href="login.php">Intra in cont</a>
+        </p>
+    <?php endif; ?>
 </div>
 
 </body>
