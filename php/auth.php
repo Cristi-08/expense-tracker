@@ -1,4 +1,7 @@
 <?php
+// Sesiunea trebuie pornita inainte de orice redirect sau output
+session_start();
+
 // Preia actiunea trimisa din formular
 $actiune = $_POST['actiune'] ?? '';
 
@@ -69,10 +72,58 @@ if ($actiune === 'register') {
 }
 
 // ============================================================
-// LOGIN (va fi implementat mai tarziu)
+// LOGIN
 // ============================================================
 if ($actiune === 'login') {
-    $email = trim($_POST['email'] ?? '');
-    echo "Incercare login cu emailul: " . htmlspecialchars($email);
+
+    // Preia si curata datele din formular
+    $email  = trim($_POST['email']  ?? '');
+    $parola = trim($_POST['parola'] ?? '');
+
+    // Validare: campuri goale
+    if ($email === '' || $parola === '') {
+        header('Location: ../login.php?eroare=Completeaza+emailul+si+parola');
+        exit;
+    }
+
+    // Citeste utilizatorii din JSON
+    $fisier      = '../data/users.json';
+    $continut    = file_get_contents($fisier);
+    $utilizatori = json_decode($continut, true);
+
+    // Daca fisierul e gol sau invalid
+    if (!is_array($utilizatori)) {
+        header('Location: ../login.php?eroare=Nu+exista+niciun+cont+inregistrat');
+        exit;
+    }
+
+    // Cauta utilizatorul dupa email
+    $user_gasit = null;
+    foreach ($utilizatori as $user) {
+        if ($user['email'] === $email) {
+            $user_gasit = $user;
+            break;
+        }
+    }
+
+    // Daca emailul nu exista in lista
+    if ($user_gasit === null) {
+        header('Location: ../login.php?eroare=Email+sau+parola+incorecta');
+        exit;
+    }
+
+    // Verifica parola cu password_verify
+    if (!password_verify($parola, $user_gasit['parola'])) {
+        header('Location: ../login.php?eroare=Email+sau+parola+incorecta');
+        exit;
+    }
+
+    // Credentialele sunt corecte - salveaza datele in sesiune
+    $_SESSION['user_id']   = $user_gasit['id'];
+    $_SESSION['user_name'] = $user_gasit['nume'];
+
+    // Redirecteaza catre pagina principala
+    header('Location: ../dashboard.php');
+    exit;
 }
 ?>

@@ -1,3 +1,7 @@
+<?php
+// Citeste mesajul de eroare transmis prin URL dupa redirect
+$eroare = isset($_GET['eroare']) ? htmlspecialchars($_GET['eroare']) : '';
+?>
 <!DOCTYPE html>
 <html lang="ro">
 <head>
@@ -40,7 +44,7 @@
             outline: none;
             border-color: #22c55e;
         }
-        .form-box .btn-submit {
+        .btn-submit {
             width: 100%;
             text-align: center;
             padding: 11px;
@@ -53,7 +57,7 @@
             cursor: pointer;
             margin-top: 8px;
         }
-        .form-box .btn-submit:hover {
+        .btn-submit:hover {
             background-color: #4ade80;
         }
         .form-link {
@@ -66,12 +70,27 @@
         .form-link a {
             color: #22c55e;
         }
+        /* Mesaj de eroare */
+        .mesaj-eroare {
+            background-color: #3b0e0e;
+            border: 1px solid #f87171;
+            color: #f87171;
+            border-radius: 6px;
+            padding: 10px 14px;
+            margin-bottom: 18px;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
 
 <div class="form-box">
     <h1>Autentificare</h1>
+
+    <?php if ($eroare): ?>
+        <!-- Afiseaza eroarea primita de la auth.php -->
+        <div class="mesaj-eroare"><?= $eroare ?></div>
+    <?php endif; ?>
 
     <form action="php/auth.php" method="POST">
         <!-- Camp ascuns pentru a identifica actiunea -->
