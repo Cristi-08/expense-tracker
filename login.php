@@ -1,9 +1,16 @@
 <?php
 // Citeste mesajul de eroare transmis prin URL dupa redirect
 $eroare = isset($_GET['eroare']) ? htmlspecialchars($_GET['eroare']) : '';
+
+$lang = $_COOKIE['lang'] ?? 'ro';
+$translations = [
+    'ro' => ['dashboard' => 'Panou principal', 'add' => 'Adauga', 'logout' => 'Deconectare', 'balance' => 'Sold curent', 'transactions' => 'Tranzactii', 'amount' => 'Suma (lei)', 'category' => 'Categorie', 'type' => 'Tip', 'date' => 'Data', 'description' => 'Descriere (optional)', 'income' => 'Venit', 'expense' => 'Cheltuiala', 'no_transactions' => 'Nu ai adaugat inca nicio tranzactie.', 'success' => 'Tranzactia a fost adaugata.'],
+    'en' => ['dashboard' => 'Dashboard', 'add' => 'Add', 'logout' => 'Logout', 'balance' => 'Current balance', 'transactions' => 'Transactions', 'amount' => 'Amount (lei)', 'category' => 'Category', 'type' => 'Type', 'date' => 'Date', 'description' => 'Description (optional)', 'income' => 'Income', 'expense' => 'Expense', 'no_transactions' => 'No transactions yet.', 'success' => 'Transaction added.']
+];
+$t = $translations[$lang];
 ?>
 <!DOCTYPE html>
-<html lang="ro">
+<html lang="<?= $lang ?>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -84,6 +91,11 @@ $eroare = isset($_GET['eroare']) ? htmlspecialchars($_GET['eroare']) : '';
 </head>
 <body>
 
+<div class="header-controls header-controls-fixed">
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Schimba tema">🌙</button>
+    <button id="lang-btn" type="button" class="lang-btn">RO</button>
+</div>
+
 <div class="form-box">
     <h1>Autentificare</h1>
 
@@ -114,5 +126,6 @@ $eroare = isset($_GET['eroare']) ? htmlspecialchars($_GET['eroare']) : '';
     </p>
 </div>
 
+<script src="js/script.js"></script>
 </body>
 </html>

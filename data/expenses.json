@@ -1,1 +1,20 @@
-[]
+[
+    {
+        "id": "6a290e2a8c326",
+        "user_id": "6a1febede9edf",
+        "suma": 500,
+        "categorie": "Freelance",
+        "descriere": "",
+        "data": "2026-06-10",
+        "tip": "Venit"
+    },
+    {
+        "id": "6a291678971e0",
+        "user_id": "6a1febede9edf",
+        "suma": 500,
+        "categorie": "Mancare",
+        "descriere": "",
+        "data": "2026-06-10",
+        "tip": "Cheltuiala"
+    }
+]
