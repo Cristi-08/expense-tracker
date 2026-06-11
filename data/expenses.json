@@ -16,5 +16,68 @@
         "descriere": "",
         "data": "2026-06-10",
         "tip": "Cheltuiala"
+    },
+    {
+        "id": "6a29ea7b84858",
+        "user_id": "6a1febede9edf",
+        "suma": 100,
+        "categorie": "Transport",
+        "descriere": "",
+        "data": "2026-06-11",
+        "tip": "Cheltuiala"
+    },
+    {
+        "id": "6a2a27ba699f6",
+        "user_id": "6a2a279bb2fe3",
+        "suma": 100,
+        "categorie": "Distractie",
+        "descriere": "",
+        "data": "2026-06-11",
+        "tip": "Cheltuiala"
+    },
+    {
+        "id": "6a2a27cf46aec",
+        "user_id": "6a2a279bb2fe3",
+        "suma": 150,
+        "categorie": "Freelance",
+        "descriere": "",
+        "data": "2026-06-11",
+        "tip": "Venit"
+    },
+    {
+        "id": "6a2a29fe915f6",
+        "user_id": "6a2a29e792c1b",
+        "suma": 100,
+        "categorie": "Transport",
+        "descriere": "",
+        "data": "2026-06-11",
+        "tip": "Cheltuiala"
+    },
+    {
+        "id": "6a2a2a12040be",
+        "user_id": "6a2a29e792c1b",
+        "suma": 500,
+        "categorie": "Freelance",
+        "descriere": "",
+        "data": "2026-06-11",
+        "tip": "Venit"
+    },
+    {
+        "id": "6a2a2af41fef7",
+        "user_id": "6a2a2adf3d900",
+        "suma": 200,
+        "categorie": "Distractie",
+        "descriere": "",
+        "data": "2026-06-11",
+        "tip": "Cheltuiala"
+    },
+    {
+        "id": "6a2a2b02953b2",
+        "user_id": "6a2a2adf3d900",
+        "suma": 1000,
+        "categorie": "Freelance",
+        "descriere": "",
+        "data": "2026-06-11",
+        "tip": "Venit"
     }
 ]

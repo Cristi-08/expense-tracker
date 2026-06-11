@@ -9,8 +9,8 @@ require_once 'php/save_data.php';
 
 $lang = $_COOKIE['lang'] ?? 'ro';
 $translations = [
-    'ro' => ['dashboard' => 'Panou principal', 'add' => 'Adauga', 'logout' => 'Deconectare', 'balance' => 'Sold curent', 'transactions' => 'Tranzactii', 'amount' => 'Suma (lei)', 'category' => 'Categorie', 'type' => 'Tip', 'date' => 'Data', 'description' => 'Descriere (optional)', 'income' => 'Venit', 'expense' => 'Cheltuiala', 'no_transactions' => 'Nu ai adaugat inca nicio tranzactie.', 'success' => 'Tranzactia a fost adaugata.'],
-    'en' => ['dashboard' => 'Dashboard', 'add' => 'Add', 'logout' => 'Logout', 'balance' => 'Current balance', 'transactions' => 'Transactions', 'amount' => 'Amount (lei)', 'category' => 'Category', 'type' => 'Type', 'date' => 'Date', 'description' => 'Description (optional)', 'income' => 'Income', 'expense' => 'Expense', 'no_transactions' => 'No transactions yet.', 'success' => 'Transaction added.']
+    'ro' => ['dashboard' => 'Panou principal', 'add' => 'Adauga', 'logout' => 'Deconectare', 'balance' => 'Sold curent', 'transactions' => 'Tranzactii', 'amount' => 'Suma (lei)', 'category' => 'Categorie', 'type' => 'Tip', 'date' => 'Data', 'description' => 'Descriere (optional)', 'income' => 'Venit', 'expense' => 'Cheltuiala', 'no_transactions' => 'Nu ai adaugat inca nicio tranzactie.', 'success' => 'Tranzactia a fost adaugata.', 'show_all' => 'Vezi toate tranzactiile', 'show_less' => 'Arata mai putine'],
+    'en' => ['dashboard' => 'Dashboard', 'add' => 'Add', 'logout' => 'Logout', 'balance' => 'Current balance', 'transactions' => 'Transactions', 'amount' => 'Amount (lei)', 'category' => 'Category', 'type' => 'Type', 'date' => 'Date', 'description' => 'Description (optional)', 'income' => 'Income', 'expense' => 'Expense', 'no_transactions' => 'No transactions yet.', 'success' => 'Transaction added.', 'show_all' => 'Show all transactions', 'show_less' => 'Show less']
 ];
 $t = $translations[$lang];
 
@@ -51,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $tranzactii = getCheltuieliUser($user_id);
+$total_tranzactii = count($tranzactii);
 
 $sold = 0;
 foreach ($tranzactii as $tr) {
@@ -72,13 +73,10 @@ $sold_class = $sold >= 0 ? 'balance-pos' : 'balance-neg';
     <div class="container header-inner">
         <a href="dashboard.php" class="logo">ExpenseTracker</a>
         <nav class="page-nav">
-            <a href="profile.php"><?= htmlspecialchars($user_name) ?></a>
-            <a href="logout.php" class="btn btn-outline" style="padding:5px 14px;font-size:0.85rem;"><?= $t['logout'] ?></a>
+            <a href="contact.php" style="color: #888888;">Contact</a>
+            &nbsp;
+            <a href="profile.php" class="text-green" style="color: #22c55e; font-weight: 600; margin-right: 12px;"><?= htmlspecialchars($user_name) ?></a>
         </nav>
-        <div class="header-controls">
-            <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Schimba tema">🌙</button>
-            <button id="lang-btn" type="button" class="lang-btn">RO</button>
-        </div>
     </div>
 </header>
 
@@ -93,7 +91,7 @@ $sold_class = $sold >= 0 ? 'balance-pos' : 'balance-neg';
         <div class="alert alert-error"><?= htmlspecialchars($eroare) ?></div>
     <?php endif; ?>
     <?php if ($succes): ?>
-        <div class="alert alert-success"><?= htmlspecialchars($succes) ?></div>
+        <div class="alert alert-success" id="alert-succes"><?= htmlspecialchars($succes) ?></div>
     <?php endif; ?>
 
     <div class="card" style="margin-bottom:32px;">
@@ -154,8 +152,8 @@ $sold_class = $sold >= 0 ? 'balance-pos' : 'balance-neg';
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach (array_reverse($tranzactii) as $tr): ?>
-                        <tr>
+                    <?php $i = 0; foreach (array_reverse($tranzactii) as $tr): $i++; ?>
+                        <tr<?= $i > 5 ? ' class="extra-row"' : '' ?>>
                             <td class="muted"><?= htmlspecialchars($tr['data']) ?></td>
                             <td><?= htmlspecialchars($tr['descriere'] ?: '—') ?></td>
                             <td><?= htmlspecialchars($tr['categorie']) ?></td>
@@ -164,7 +162,7 @@ $sold_class = $sold >= 0 ? 'balance-pos' : 'balance-neg';
                                 <?= number_format($tr['suma'], 2) ?> lei
                             </td>
                             <td>
-                                <form method="POST" class="delete-form" onsubmit="return confirm('<?= $lang === 'en' ? 'Delete this transaction?' : 'Stergi aceasta tranzactie?' ?>');">
+                                <form method="POST" class="delete-form">
                                     <input type="hidden" name="actiune" value="sterge">
                                     <input type="hidden" name="id" value="<?= htmlspecialchars($tr['id']) ?>">
                                     <button type="submit" class="delete-btn" title="Sterge" aria-label="Sterge">&times;</button>
@@ -175,6 +173,9 @@ $sold_class = $sold >= 0 ? 'balance-pos' : 'balance-neg';
                 </tbody>
             </table>
         </div>
+        <?php if ($total_tranzactii > 5): ?>
+            <button id="toggle-transactions" type="button" class="btn btn-secondary" style="margin-top:16px;" data-expanded="0" data-show-all="<?= htmlspecialchars($t['show_all'] . ' (' . $total_tranzactii . ')') ?>" data-show-less="<?= htmlspecialchars($t['show_less']) ?>"><?= htmlspecialchars($t['show_all']) ?> (<?= $total_tranzactii ?>)</button>
+        <?php endif; ?>
     <?php endif; ?>
 
 </div>
@@ -201,6 +202,27 @@ function updateCategorii() {
 
 tipSelect.addEventListener('change', updateCategorii);
 updateCategorii();
+
+const alertSucces = document.getElementById('alert-succes');
+if (alertSucces) {
+    setTimeout(function () {
+        alertSucces.classList.add('fade-out');
+        setTimeout(function () {
+            alertSucces.remove();
+        }, 400);
+    }, 3000);
+}
+
+const toggleBtn = document.getElementById('toggle-transactions');
+if (toggleBtn) {
+    const extraRows = document.querySelectorAll('.extra-row');
+    toggleBtn.addEventListener('click', function () {
+        const expanded = toggleBtn.dataset.expanded === '1';
+        extraRows.forEach(row => row.classList.toggle('show', !expanded));
+        toggleBtn.textContent = expanded ? toggleBtn.dataset.showAll : toggleBtn.dataset.showLess;
+        toggleBtn.dataset.expanded = expanded ? '0' : '1';
+    });
+}
 </script>
 
 </body>

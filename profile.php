@@ -61,16 +61,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="dashboard.php">Dashboard</a>
             <a href="logout.php" class="btn btn-outline" style="padding:5px 14px;font-size:0.85rem;"><?= $t['logout'] ?></a>
         </nav>
-        <div class="header-controls">
-            <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Schimba tema">🌙</button>
-            <button id="lang-btn" type="button" class="lang-btn">RO</button>
-        </div>
     </div>
 </header>
 
 <div class="form-wrap">
     <div class="form-box">
         <h1>Profil</h1>
+
+        <a href="logout.php" class="btn btn-danger" style="display:inline-block;margin-bottom:20px;"><?= $t['logout'] ?></a>
 
         <div class="profile-field">
             <div class="label">Nume</div>
@@ -106,6 +104,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <button type="submit" class="btn btn-accent btn-full">Salveaza parola</button>
         </form>
+
+        <div class="profile-divider"></div>
+        <p class="section-title">Preferinte</p>
+
+        <div style="display:flex; gap:32px;">
+            <div class="profile-field">
+                <div class="label">Tema</div>
+                <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Schimba tema">🌙</button>
+            </div>
+            <div class="profile-field">
+                <div class="label">Limba</div>
+                <button id="lang-btn" type="button" class="lang-btn">RO</button>
+            </div>
+        </div>
 
         <p class="form-link"><a href="dashboard.php">&larr; Inapoi la dashboard</a></p>
     </div>

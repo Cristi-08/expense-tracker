@@ -1,16 +1,9 @@
 [
     {
-        "id": "6a1febede9edf",
-        "nume": "Cristi",
-        "email": "arpentecristian08@gmail.com",
-        "parola": "$2y$10$WiWnsJ\/ZZ6CHfqnCbiIRCOGrx45PLrL5Qtqw2k5DMt9UB83crHnPW",
-        "data_inregistrare": "2026-06-03 10:55:10"
-    },
-    {
-        "id": "6a29065f3df6a",
-        "nume": "Cristi",
-        "email": "christianarpe707@gmail.com",
-        "parola": "$2y$10$cjCp9zPejQsFR.bVOdQ8wOb7FzZrJBc1..xJ6ejoWgZF54AhCfsCe",
-        "data_inregistrare": "2026-06-10 08:38:23"
+        "id": "6a2a2adf3d900",
+        "nume": "Cristian",
+        "email": "arpentecristian@gmail.com",
+        "parola": "$2y$10$ugAp7CqMk6CPwHvYsNGreuzTQdHGKy2nIGZzkIq2.JDA5ldPcCqti",
+        "data_inregistrare": "2026-06-11 05:26:23"
     }
 ]

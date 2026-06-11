@@ -181,6 +181,53 @@ a { color: var(--text); text-decoration: none; }
 
 .btn-ghost-accent:hover { background-color: var(--accent); color: #000000; }
 
+.btn-danger {
+    background-color: transparent;
+    border: 1px solid #f87171;
+    color: #f87171;
+}
+
+.btn-danger:hover { background-color: #f87171; color: #000000; }
+
+/* auth pages header (login / register) */
+.auth-header {
+    background: transparent;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.auth-header-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.auth-header-name {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.auth-header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.auth-switch-btn {
+    border: 1px solid #27272a;
+    background: transparent;
+    color: #ffffff;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.auth-switch-btn:hover { border-color: #3f3f46; }
+
 .btn-full { width: 100%; padding: 11px; margin-top: 8px; }
 
 /* hero */
@@ -424,6 +471,18 @@ textarea { resize: vertical; min-height: 100px; }
     padding: 10px 14px;
     margin-bottom: 18px;
     font-size: 0.9rem;
+    transition: opacity 0.4s ease, margin 0.4s ease, padding 0.4s ease, max-height 0.4s ease;
+    max-height: 60px;
+    overflow: hidden;
+}
+
+.alert.fade-out {
+    opacity: 0;
+    max-height: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-width: 0;
 }
 
 .alert-error { background-color: #3b0e0e; border: 1px solid #f87171; color: #f87171; }
@@ -481,6 +540,10 @@ textarea { resize: vertical; min-height: 100px; }
 .table tr:last-child td { border-bottom: none; }
 .table tr:hover td { background-color: #161616; }
 .table th:last-child, .table td:last-child { width: 1%; text-align: right; }
+
+/* show all transactions toggle */
+.extra-row { display: none; }
+.extra-row.show { display: table-row; }
 
 /* delete transaction */
 .delete-form { display: inline-block; margin: 0; }
